@@ -1,0 +1,153 @@
+1. Récupérez la liste des interfaces réseau de la machine sans afficher aucun détail
+pour ces interfaces. Vraiment juste la liste des noms.
+	
+-->  networksetup -listallhardwareports |  grep Device  |awk '{print $2}'
+
+2. Identifiez et affichez les caractéristiques de l’interface Ethernet :
+	a) Indiquez l’adresse de Broadcast
+		--> ifconfig -a | grep "broadcast" | awk '{print $6}'
+
+	b) Indiquez toutes les adresses IP qui font partie du même sous-réseau
+		--> nmap -sP 10.11.0.0/16
+
+3. Identifiez l’adresse MAC de la carte Wi-Fi
+
+--> networksetup -getmacaddress Wi-Fi
+
+4. Identifiez la gateway par défaut dans la table de routage
+--> netstat -nr | grep en | grep default | awk '{print }'
+
+5. nslookup slash16.org | grep Server | awk '{print $2}'
+
+6. /private/etc/resolv.conf
+
+7. nslookup slash16.org 8.8.8.8
+
+8. ~/init ᐅ whois slash16.org
+Domain Name: SLASH16.ORG
+Registry Domain ID: D171286063-LROR
+Registrar WHOIS Server: whois.bookmyname.com
+Registrar URL: https://www.bookmyname.com
+Updated Date: 2019-03-15T18:22:10Z
+Creation Date: 2014-03-03T23:31:09Z
+Registry Expiry Date: 2020-03-03T23:31:09Z
+Registrar Registration Expiration Date:
+Registrar: Online SAS
+Registrar IANA ID: 74
+Registrar Abuse Contact Email: abuse+org@bookmyname.com
+Registrar Abuse Contact Phone: +33.184130099
+Reseller:
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Registrant Organization:
+Registrant State/Province:
+Registrant Country: FR
+Name Server: NS-1236.AWSDNS-26.ORG
+Name Server: NS-144.AWSDNS-18.COM
+Name Server: NS-686.AWSDNS-21.NET
+Name Server: NS-1989.AWSDNS-56.CO.UK
+DNSSEC: unsigned
+URL of the ICANN Whois Inaccuracy Complaint Form https://www.icann.org/wicf/)
+>>> Last update of WHOIS database: 2019-07-17T11:26:02Z <<<
+
+For more information on Whois status codes, please visit https://icann.org/epp
+
+Access to Public Interest Registry WHOIS information is provided to assist persons in determining the contents of a domain name registration record in the Public Interest Registry registry database. The data in this record is provided by Public Interest Registry for informational purposes only, and Public Interest Registry does not guarantee its accuracy. This service is intended only for query-based access. You agree that you will use this data only for lawful purposes and that, under no circumstances will you use this data to (a) allow, enable, or otherwise support the transmission by e-mail, telephone, or facsimile of mass unsolicited, commercial advertising or solicitations to entities other than the data recipient's own existing customers; or (b) enable high volume, automated, electronic processes that send queries or data to the systems of Registry Operator, a Registrar, or Afilias except as reasonably necessary to register domain names or modify existing registrations. All rights reserved. Public Interest Registry reserves the right to modify these terms at any time. By submitting this query, you agree to abide by this policy.
+
+The Registrar of Record identified in this output may have an RDDS service that can be queried for additional information on how to contact the Registrant, Admin, or Tech contact of the queried domain name.
+
+9. ~/init ᐅ nslookup 42.fr 8.8.8.8
+Server:         8.8.8.8
+Address:        8.8.8.8#53
+
+Non-authoritative answer:
+Name:   42.fr
+Address: 163.172.250.12
+Name:   42.fr
+Address: 163.172.250.11
+Name:   42.fr
+Address: 163.172.250.13 
+
+10. traceroute -q 1 -w 1 slash16.org
+
+11. traceroute -q 1 -w 1 slash16.org
+    whois 10.60.1.11
+
+12. ifconfig -a | less
+
+13. ~/init ᐅ nslookup  10.11.6.9  10.51.1.42
+Server:         10.51.1.42
+Address:        10.51.1.42#53
+
+9.6.11.10.in-addr.arpa  name = e1r6p9.42.fr.
+
+14. /private/etc/hosts 
+
+15. ok
+
+---------------------------------------------------------
+V.3 System
+----------------------------------------------------------
+1. /etc/issue
+
+2. scutil --set HostName
+
+3. /etc/hostname mais il faut aussi le changer dans /etc/host afin de le set en tant que localhost sur 127.0.0.1
+
+4. uptime -- show how long system has been running
+
+5. service ssh status
+
+6. service ssh restart
+
+7. ps aux | grep -i sshd |  awk '{print $2}'
+
+8. .ssh/known_hosts
+
+9. w
+
+10. sudo fdisk -l
+
+11. df -h
+
+12. du -h /var
+
+13. ps aux
+
+14. tail -f /var/log/syslog &
+
+15. kill -9 $(ps aux | grep "tail -f /var/log/syslog" | grep -v "grep" | awk '{print $2}')
+
+16. le cron
+
+17. ssh  user@10.11.200.22
+
+18. systemctl stop ssh
+
+19. upstart jobs
+
+acpid.conf                   failsafe.conf               mounted-dev.conf                  rsyslog.conf
+alsa-utils.conf              failsafe-x.conf             mounted-proc.conf                 setvtrgb.conf
+anacron.conf                 flush-early-job-log.conf    mounted-run.conf                  shutdown.conf
+apparmor.conf                friendly-recovery.conf      mounted-tmp.conf                  ssh.conf
+apport.conf                  gpu-manager.conf            mounted-var.conf                  tty1.conf
+avahi-cups-reload.conf       hostname.conf               mountkernfs.sh.conf               tty2.conf
+avahi-daemon.conf            hostname.sh.conf            mountnfs-bootclean.sh.conf        tty3.conf
+bluetooth.conf               hwclock.conf                mountnfs.sh.conf                  tty4.conf
+bootmisc.sh.conf             hwclock-save.conf           mtab.sh.conf                      tty5.conf
+checkfs.sh.conf              hwclock.sh.conf             networking.conf                   tty6.conf
+checkroot-bootclean.sh.conf  irqbalance.conf             network-interface.conf            udev.conf
+checkroot.sh.conf            kmod.conf                   network-interface-container.conf  udevmonitor.conf
+console.conf                 lightdm.conf                network-interface-security.conf   udevtrigger.conf
+console-font.conf            lxcfs.conf                  network-manager.conf              ufw.conf
+console-setup.conf           lxd.conf                    passwd.conf                       upstart-file-bridge.conf
+container-detect.conf        mountall-bootclean.sh.conf  procps.conf                       upstart-socket-bridge.conf
+control-alt-delete.conf      mountall.conf               procps-instance.conf              upstart-udev-bridge.conf
+cron.conf                    mountall-net.conf           rc.conf                           ureadahead.conf
+cryptdisks.conf              mountall-reboot.conf        rcS.conf                          ureadahead-other.conf
+cryptdisks-udev.conf         mountall.sh.conf            rc-sysinit.conf                   usb-modeswitch-upstart.conf
+cups-browsed.conf            mountall-shell.conf         resolvconf.conf                   wait-for-state.conf
+cups.conf                    mountdevsubfs.sh.conf       rfkill-restore.conf               whoopsie.conf
+dbus.conf                    mounted-debugfs.conf        rfkill-store.conf
+
+er@ubuntu-server:/etc/init$ cat /etc/passwd | awk -F ":" '{print $1}'
+
